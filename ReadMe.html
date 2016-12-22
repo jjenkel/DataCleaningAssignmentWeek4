@@ -131,8 +131,16 @@ $(document).ready(function () {
 </div>
 <div id="readme-addendum" class="section level2">
 <h2>ReadMe Addendum</h2>
-<p>This ‘ReadMe’ Addendum is in addition to the original ReadMe.txt file that accompanies the dataset named above and used for the Getting And Cleaning Data Course - Week 4 Assignment. The text of the original document has been pasted into this document below (at the end) for easy reference.</p>
-<p>The repository associated with this</p>
+<p>This ‘ReadMe’ Addendum supplements the original ReadMe.txt file that accompanies the dataset named above and used for the Getting And Cleaning Data Course - Week 4 Assignment. The text of the original document has been pasted into this document below (at the end) for easy reference.</p>
+<p>The GitHub repository associated with this work can be found at: <a href="https://github.com/jjenkel/DataCleaningAssignmentWeek4">Link To GitHub</a></p>
+</div>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>The script ‘run_analysis’ prepares two datasets by reading in and joining together the original motion data collected via Samsung cellphones. At the end of the loading and joining process the data are in a dataset named ‘AllData’ (an R data.frame). The data are then restricted to the measures ‘mean’ and ‘std’ as directed by the assignment instructions. Column names were added and made (more) tidy than in the initial data, but not dramatically to preserve the variable naming conventions used by the original researchers. The final dataset, named ‘AllData’ had 10299 observations and 76 variables.</p>
+<p>At the end of the script, averages of the remaining measures by Subject and Activity are calculated and stored to a dataset named ‘ResultsData’. This dataset is also written to a text file in the working directory. The ‘ResultsData’ dataset contains 180 observations and 75 variables.</p>
+</div>
+<div id="data-cleaning-details" class="section level2">
+<h2>Data Cleaning Details</h2>
 <p>As instructed for the Getting and Cleaning Data Week 4 Assignment:</p>
 <ul>
 <li>Beginning with the training data
@@ -142,12 +150,12 @@ $(document).ready(function () {
 <li>The X variable Names (called features here) were loaded and added to the X Variable data frame</li>
 <li>Then the Subject ID was loaded from: “./UCI HAR Dataset/train/subject_train.txt” and added to the X variable dataset.</li>
 <li>the Y variables dataset and X variables dataset were joined using cbind() to become the complete training dataset</li>
-<li>using select() and grepl() a subset of columns was retained that had either the characters: “Subject”, “mean”, or “Std” in their name. <em>NOTE</em>: the instructions were vague on this point whether or not it was any mention of “Mean” or “std”, or just those coming at the end. I included them all. Columns with the text ‘MeanFreq’ included becaues they have “Mean” in them were subsequently dropped.</li>
+<li>using select() and grepl() a subset of columns was retained that had either the characters: “Subject”, “mean”, or “Std” in their name. <em>NOTE</em>: the instructions were vague on this point whether or not it was any mention of “Mean” or “Std”, or just those where this text comes at the end of the variable name. I included them all. Columns with the text ‘MeanFreq’ included becaues they have “Mean” in them were subsequently dropped to arrive at the final set of measure to take forward.</li>
 </ul></li>
 <li><p>The exact same steps outlined in the above 6 steps were conducted on the test data, changing filenames, paths, and dataset names as needed to create the complete test dataset.</p></li>
-<li><p>The training dataset and test dataset were appended together to create the final dataset, AllData</p></li>
+<li><p>The training dataset and test dataset were appended together to create the complete dataset, ‘AllData’.</p></li>
 <li><p>As the final step, the Activity labels were loaded and matched to their coded values using merge(). The label was named “ActivityDesc”.</p></li>
-<li>To preserve much of the original variable naming structure not many changes to variable names were made. <em>NOTE</em>: my personal preference is to use Title Casing, so variable names were changed to be more like that style. The list of variable name transformations follows:
+<li>To preserve much of the original variable naming structure not many changes to variable names were made. <em>NOTE</em>: my personal preference is to use TitleCasing, so variable names were changed to be more like that style. The list of variable name transformations follows:
 <ul>
 <li>‘-mean’ changed with gsub() to ‘Mean’</li>
 <li>‘-std’ changed with gsub() to ‘Std’</li>
@@ -155,12 +163,18 @@ $(document).ready(function () {
 <li>‘gravity’ changed with gsub() to ‘Gravity’</li>
 <li>str_replace_all(tmpNames,“[:punct:]|[:space:]”,“”) was used to replace all whitespace and punctuation</li>
 </ul></li>
-<li><p>A new dataset containing the summarized data (average for each variable) by subject and activity was created and written to file (AveragesDataset.txt)</p></li>
+<li><p>A new dataset containing the summarized data (average for each variable) by subject and activity was created and written to file (ResultsData.txt)</p></li>
 </ul>
-<p>========================================<br />
-THE ORIGINAL README FILE<br />
-========================================<br />
-Human Activity Recognition Using Smartphones Dataset<br />
+</div>
+<div id="codebook" class="section level2">
+<h2>Codebook</h2>
+<p>With regard to the full dataset (AllData) the only changes were the dropping or renaming of columns. With that in mind the original codebook is still applicable to that data. The changes in variable names were not so severe as to prevent mapping the variables here back to those contributed by the original researchers. The original variable definitions can be found in the ‘UCI HAR Dataset’ sub-folder of the GitHub repository <a href="https://github.com/jjenkel/DataCleaningAssignmentWeek4/tree/master/UCI%20HAR%20Dataset">(here)</a> in the files named features.txt and features_info.txt.</p>
+<p>The new Results dataset can be simply described as a mean within Subject and Activity for each of the 73 measures remaining in the ‘AllData’ dataset. Those 73 measures can be mapped back to the original data definitions as well.</p>
+</div>
+</div>
+<div id="the-original-readme-file" class="section level1">
+<h1>THE ORIGINAL README FILE</h1>
+<p>Human Activity Recognition Using Smartphones Dataset<br />
 Version 1.0<br />
 ========================================<br />
 Jorge L. Reyes-Ortiz, Davide Anguita, Alessandro Ghio, Luca Oneto.<br />
@@ -172,7 +186,6 @@ www.smartlab.ws<br />
 ========================================</p>
 <p>The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz. The experiments have been video-recorded to label the data manually. The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data.</p>
 <p>The sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window). The sensor acceleration signal, which has gravitational and body motion components, was separated using a Butterworth low-pass filter into body acceleration and gravity. The gravitational force is assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. From each window, a vector of features was obtained by calculating variables from the time and frequency domain. See ‘features_info.txt’ for more details.</p>
-</div>
 </div>
 <div id="for-each-record-it-is-provided" class="section level1">
 <h1>For each record it is provided:</h1>

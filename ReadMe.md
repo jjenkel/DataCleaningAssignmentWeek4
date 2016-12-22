@@ -5,16 +5,21 @@ date: "December 21, 2016"
 output: html_document
 ---
 
-#Human Activity Recognition Using Smartphones Dataset
-##Version 1.0
+##Human Activity Recognition Using Smartphones Dataset
+###Version 1.0  
+
 ##ReadMe Addendum 
 
-This 'ReadMe' Addendum is in addition to the original ReadMe.txt file that accompanies the dataset named above and used for the 
-Getting And Cleaning Data Course - Week 4 Assignment. The text of the original document has been pasted into this document below 
-(at the end) for easy reference.
+This 'ReadMe' Addendum supplements the original ReadMe.txt file that accompanies the dataset named above and used for the Getting And Cleaning Data Course - Week 4 Assignment. The text of the original document has been pasted into this document below (at the end) for easy reference.
 
-The repository associated with this work can be found at: 
+The GitHub repository associated with this work can be found at: [Link To GitHub](https://github.com/jjenkel/DataCleaningAssignmentWeek4)
 
+###Overview
+The script 'run_analysis' prepares two datasets by reading in and joining together the original motion data collected via Samsung cellphones.  At the end of the loading and joining process the data are in a dataset named 'AllData' (an R data.frame).  The data are then restricted to the measures 'mean' and 'std' as directed by the assignment instructions.  Column names were added and made (more) tidy than in the initial data, but not dramatically to preserve the variable naming conventions used by the original researchers.  The final dataset, named 'AllData' had 10299 observations and 76 variables.  
+
+At the end of the script, averages of the remaining measures by Subject and Activity are calculated and stored to a dataset named 'ResultsData'.  This dataset is also written to a text file in the working directory. The 'ResultsData' dataset contains 180 observations and 75 variables.
+
+###Data Cleaning Details
 As instructed for the Getting and Cleaning Data Week 4 Assignment:
 
 * Beginning with the training data
@@ -23,28 +28,33 @@ As instructed for the Getting and Cleaning Data Week 4 Assignment:
     + The X variable Names (called features here) were loaded and added to the X Variable data frame
     + Then the Subject ID was loaded from: "./UCI HAR Dataset/train/subject_train.txt" and added to the X variable dataset.
     + the Y variables dataset and X variables dataset were joined using cbind() to become the complete training dataset
-    + using select() and grepl() a subset of columns was retained that had either the characters: "Subject", "mean", or "Std" in their name.       *NOTE*: the instructions were vague on this point whether or not it was any mention of "Mean" or "std", or just those coming at the end.  I     included them all. Columns with the text 'MeanFreq' included becaues they have "Mean" in them were subsequently dropped.
+    + using select() and grepl() a subset of columns was retained that had either the characters: "Subject", "mean", or "Std" in their name.       *NOTE*: the instructions were vague on this point whether or not it was any mention of "Mean" or "Std", or just those where this text comes at the end of the variable name.  I included them all.  Columns with the text 'MeanFreq' included becaues they have "Mean" in them were subsequently dropped to arrive at the final set of measure to take forward.
 
 * The exact same steps outlined in the above 6 steps were conducted on the test data, changing filenames, paths, and dataset names as needed to create the complete test dataset.
     
-* The training dataset and test dataset were appended together to create the final dataset, AllData
+* The training dataset and test dataset were appended together to create the complete dataset, 'AllData'.
     
 * As the final step, the Activity labels were loaded and matched to their coded values using merge(). The label was named "ActivityDesc".
     
 * To preserve much of the original variable naming structure not many changes to variable names were made. 
-*NOTE*: my personal preference is to use Title Casing, so variable names were changed to be more like that style.  The list of variable 
-    name transformations follows:
+*NOTE*: my personal preference is to use TitleCasing, so variable names were changed to be more like that style.  The list of variable name transformations follows:
     + '-mean' changed with gsub() to 'Mean'
     + '-std' changed with gsub() to 'Std'
     + 'angle' changed with gsub() to 'Angle'
     + 'gravity' changed with gsub() to 'Gravity'
     + str_replace_all(tmpNames,"[:punct:]|[:space:]","") was used to replace all whitespace and punctuation
 
-* A new dataset containing the summarized data (average for each variable) by subject and activity was created and written to file (AveragesDataset.txt)  
+* A new dataset containing the summarized data (average for each variable) by subject and activity was created and written to file (ResultsData.txt)  
 
-========================================  
-THE ORIGINAL README FILE  
-========================================  
+###Codebook
+With regard to the full dataset (AllData) the only changes were the dropping or renaming of columns.  With that in mind the original codebook is still applicable to that data.  The changes in variable names were not so severe as to prevent mapping the variables here back to those contributed by the original researchers.  The original variable definitions can be found in the 'UCI HAR Dataset' sub-folder of the GitHub repository [(here)](https://github.com/jjenkel/DataCleaningAssignmentWeek4/tree/master/UCI%20HAR%20Dataset) in the files named features.txt and features_info.txt.
+
+The new Results dataset can be simply described as a mean within Subject and Activity for each of the 73 measures remaining in the 'AllData' dataset.  Those 73 measures can be mapped back to the original data definitions as well.
+
+
+
+###THE ORIGINAL README FILE  
+
 Human Activity Recognition Using Smartphones Dataset  
 Version 1.0  
 ========================================  

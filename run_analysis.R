@@ -117,6 +117,6 @@ new_names <- c("ActivityDesc","Subject")
 colnames(ResultsData)[1:2] <- new_names
 
 # Write out the new dataset
-srcfile <- "./AveragesDataset.txt"
+srcfile <- "./ResultsData.txt"
 write.table(ResultsData,srcfile,row.name = FALSE)
 
